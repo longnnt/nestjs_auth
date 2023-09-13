@@ -7,6 +7,7 @@ import { CreateProductDto } from './dtos/create-product.dto';
 import { Product } from './product.entity';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CategoryService } from 'src/category/category.service';
+import { PaginationDto } from './dtos/pagination-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -35,8 +36,41 @@ export class ProductService {
     throw new BadRequestException('product name in use');
   }
 
-  async getAll() {
-    return await this.productRepo.createQueryBuilder('getProduct').getMany();
+  async get(query?: PaginationDto) {
+    const { page, size } = query;
+
+    const skipRecords = size * (page - 1);
+
+    const listProduct = await this.productRepo
+      .createQueryBuilder('getProduct')
+      .take(size)
+      .skip(skipRecords)
+      .getMany();
+
+    const getTotalRecords = await this.productRepo
+      .createQueryBuilder('getProductAll')
+      .getMany();
+
+    const totalPages =
+      getTotalRecords.length % size === 0
+        ? getTotalRecords.length / size
+        : Math.floor(getTotalRecords.length / size) + 1;
+
+    if (page > totalPages) {
+      throw new BadRequestException('bad request');
+    }
+
+    const response = {
+      list: listProduct,
+      pagination: {
+        currentPage: page,
+        limit: size,
+        totalPage: totalPages,
+        totalProduct: getTotalRecords.length,
+      },
+    };
+
+    return response;
   }
 
   findByName(name: string) {

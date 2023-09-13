@@ -1,6 +1,5 @@
 import { Exclude } from 'class-transformer';
 import { IsEmail } from 'class-validator';
-import { Address } from 'src/address/address.entity';
 import { Order } from 'src/order/order.entity';
 import {
   AfterInsert,
@@ -39,9 +38,6 @@ export class User {
 
   @OneToMany(() => Order, (order) => order.userId)
   orders: Order[];
-
-  @OneToMany(() => Address, (address) => address.userId)
-  address: Address[];
 
   @AfterInsert()
   logAfterInsert() {
