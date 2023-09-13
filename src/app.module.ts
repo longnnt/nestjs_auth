@@ -13,11 +13,11 @@ import { UserModule } from './user/user.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'postgres://admin:HGKCl2HMPSqBYDMh2qk20qk9SCpt2EjT@dpg-ck0mcob6fquc738499d0-a.singapore-postgres.render.com/demo_pj',
+      host: process.env.DB_HOSTNAME || 'postgres://admin:HGKCl2HMPSqBYDMh2qk20qk9SCpt2EjT@dpg-ck0mcob6fquc738499d0-a.singapore-postgres.render.com/demo_pj',
       port: 5432,
-      username: 'admin',
-      password: 'HGKCl2HMPSqBYDMh2qk20qk9SCpt2EjT',
-      database: 'demo_pj',
+      username: process.env.DB_USERNAME || 'admin',
+      password: process.env.DB_PASSWORD || 'HGKCl2HMPSqBYDMh2qk20qk9SCpt2EjT',
+      database: process.env.DB_DATABASE || 'demo_pj',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
