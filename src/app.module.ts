@@ -13,7 +13,7 @@ import { UserModule } from './user/user.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'postgres://admin:HGKCl2HMPSqBYDMh2qk20qk9SCpt2EjT@dpg-ck0mcob6fquc738499d0-a/demo_pj',
+      host: 'postgres://admin:HGKCl2HMPSqBYDMh2qk20qk9SCpt2EjT@dpg-ck0mcob6fquc738499d0-a.singapore-postgres.render.com/demo_pj',
       port: 5432,
       username: 'admin',
       password: 'HGKCl2HMPSqBYDMh2qk20qk9SCpt2EjT',
